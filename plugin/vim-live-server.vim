@@ -64,13 +64,13 @@ endif
 
 " Live-Server
 if executable('live-server')
-let s:livebrowser_counter = 0
+let s:liveserver_counter = 0
 
 function! StartLiveServer()
     let cmd = "live-server &"
     call system(cmd)
     echo "Live server started in the background."
-    let s:livebrowser_counter += 1
+    let s:liveserver_counter += 1
 endfunction
 
 function! StartLiveServerOnPort(port)
@@ -78,7 +78,7 @@ function! StartLiveServerOnPort(port)
     let cmd = "live-server --port=" . port_num . "&"
     call system(cmd)
     echo "Live Server started in the background on port " . port_num . "."
-    let s:livebrowser_counter += 1
+    let s:liveserver_counter += 1
 endfunction
 
 " Call Commands
@@ -95,20 +95,20 @@ function! KillLiveServer()
         call system(cmd)
         echo "Live Server on port 8080 terminated."
     endif
-    if s:livebrowser_counter > 0 | let s:livebrowser_counter -= 1 | endif
+    if s:liveserver_counter > 0 | let s:liveserver_counter -= 1 | endif
 endfunction
 
 function! KillLiveServerOnPort(port)
     let cmd = "pgrep -f 'live-server.*--port=" . a:port . "' | xargs -r kill"
     call system(cmd)
     echo "Live Server on port " . a:port . " terminated."
-    if s:livebrowser_counter > 0 | let s:livebrowser_counter -= 1 | endif
+    if s:liveserver_counter > 0 | let s:liveserver_counter -= 1 | endif
 endfunction
 
 function! KillAllLiveServerInstances()
     let cmd = "pkill -f 'live-server'"
     call system(cmd)
-    let s:livebrowser_counter = 0
+    let s:liveserver_counter = 0
 endfunction
 
 command! KillLiveServer call KillLiveServer()
@@ -116,7 +116,7 @@ command! -nargs=1 KillLiveServerOnPort call KillLiveServerOnPort(<f-args>)
 
 augroup LiveServerKill
     autocmd!
-    autocmd VimLeave * if s:browsersync_counter > 0 | call KillAllLiveServerInstances() | endif
+    autocmd VimLeave * if s:liveserver_counter > 0 | call KillAllLiveServerInstances() | endif
 augroup END
 endif
 endif
