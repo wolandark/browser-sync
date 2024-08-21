@@ -36,14 +36,14 @@ function! KillBrowserSync()
         call system(cmd)
         echo "BrowserSync server on port 3000 terminated."
     endif
-    if s:browsersync_counter >= 0 | let s:browsersync_counter -= 1 | endif
+    if s:browsersync_counter > 0 | let s:browsersync_counter -= 1 | endif
 endfunction
 
 function! KillBrowserSyncOnPort(port)
     let cmd = "pgrep -f 'browser-sync.*--port=" . a:port . "' | xargs -r kill"
     call system(cmd)
     echo "BrowserSync server on port " . a:port . " terminated."
-    if s:browsersync_counter >= 0 | let s:browsersync_counter -= 1 | endif
+    if s:browsersync_counter > 0 | let s:browsersync_counter -= 1 | endif
 endfunction
 
 function! KillAllBrowserSyncInstances()
@@ -95,14 +95,14 @@ function! KillLiveServer()
         call system(cmd)
         echo "Live Server on port 8080 terminated."
     endif
-    if s:livebrowser_counter >= 0 | let s:livebrowser_counter -= 1 | endif
+    if s:livebrowser_counter > 0 | let s:livebrowser_counter -= 1 | endif
 endfunction
 
 function! KillLiveServerOnPort(port)
     let cmd = "pgrep -f 'live-server.*--port=" . a:port . "' | xargs -r kill"
     call system(cmd)
     echo "Live Server on port " . a:port . " terminated."
-    if s:livebrowser_counter >= 0 | let s:livebrowser_counter -= 1 | endif
+    if s:livebrowser_counter > 0 | let s:livebrowser_counter -= 1 | endif
 endfunction
 
 function! KillAllLiveServerInstances()
